@@ -223,7 +223,6 @@ Sign in with an existant User ( Representative or Supervisor ) that should be as
 
 #
 
-**
 
 **- Extra configuration :**
 
