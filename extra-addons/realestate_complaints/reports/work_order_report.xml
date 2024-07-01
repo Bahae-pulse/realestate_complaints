@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Define the QWeb report for work order -->
+        <record id="action_report_work_order" model="ir.actions.report">
+                <field name="model">realestate.complaint</field>
+                <field name="name">Work Order</field>
+                <field name="report_name">realestate_complaints.report_work_order</field>
+                <field name="report_type">qweb-pdf</field>
+                <field name="report_file">realestate_complaints.report_work_order</field>
+                <field name="paperformat_id" ref="l10n_din5008.paperformat_euro_din"/>
+        </record>
+    </data>
+</odoo>

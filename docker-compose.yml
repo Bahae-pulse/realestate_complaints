@@ -1,0 +1,47 @@
+
+services:
+  odoo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8070:8069"
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db:5435
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_DB=postgres
+      - ADDONS_PATH=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons
+    volumes:
+      - ./extra-addons:/mnt/extra-addons
+      - ./odoo.conf:/etc/odoo/odoo.conf
+      - odoo-filestore:/var/lib/odoo/.local/share/Odoo/filestore
+    restart: always
+    networks:
+      - mynetwork
+    command: odoo -u realestate_complaints --dev=reload
+
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_DB=postgres
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+    restart: always
+    networks:
+      - mynetwork
+
+volumes:
+  odoo-db-data:
+  odoo-filestore:
+
+networks:
+  mynetwork:
+    driver: bridge

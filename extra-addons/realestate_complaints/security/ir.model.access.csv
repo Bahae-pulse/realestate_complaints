@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_realestate_complaint_public,access_realestate_complaint_public,model_realestate_complaint,base.group_user,1,1,1,1
+access_realestate_complaint_stage_public,access_realestate_complaint_stage_public,model_realestate_complaint_stage,base.group_user,1,1,1,1
+access_realestate_complaint_tag_public,access_realestate_complaint_tag_public,model_realestate_complaint_tag,base.group_user,1,1,1,1
+access_ir_sequence_public,access_ir_sequence_public,base.model_ir_sequence,base.group_public,1,0,0,0
+access_mail_template_public,access_mail_template_public,mail.model_mail_template,base.group_user,1,1,1,1
+access_realestate_complaint_public_no_login,access_realestate_complaint_public_no_login,model_realestate_complaint,base.group_public,1,0,1,0

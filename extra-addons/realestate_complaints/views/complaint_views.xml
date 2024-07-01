@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <!--  Form View for Complaint -->
+        <record id="view_complaint_form" model="ir.ui.view">
+            <field name="name">complaint.form</field>
+            <field name="model">realestate.complaint</field>
+            <field name="arch" type="xml">
+                <form class="o_lead_opportunity_form" string="Complaint Form">
+                    <header>
+                        <button name="action_review" string="Set In Review" type="object" class="oe_highlight btn-primary"/>
+                        <button name="action_progress" string="Set In Progress" type="object" class="oe_highlight btn-primary"/>
+                        <button name="action_solve" string="Solve" type="object" class="oe_highlight btn-primary" invisible="stage_state == 'solved'"/>
+                        <button name="action_drop" string="Drop" type="object" class="oe_highlight btn-danger" invisible="stage_state == 'dropped'"/>
+                        <button name="message_tenant_and_close" string="Message Tenant and Close" type="object" class="oe_highlight btn-primary" invisible="complaint_type != 'question'"/>
+                        <button name="print_work_order" string="Print Work Order" type="object" class="btn-primary" invisible="complaint_type == 'question'" groups="realestate_complaints.group_customer_service_supervisor"/>
+                        <field name="stage_id" widget="statusbar" class="o_field_statusbar" options="{'clickable': false}"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="tenant_name" readonly="1"/>
+                            <field name="tenant_email" readonly="1"/>
+                            <field name="flat_address" readonly="1"/>
+                            <field name="complaint_type" readonly="1"/>
+                            <field name="description" widget="textarea" readonly="1"/>
+                            <field name="stage_id"/>
+                            <field name="user_id"/>
+                            <field name="stage_state" invisible="1"/>
+                            <field name="action_plan" widget="textarea" required="1"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="message_to_tenant" widget="textarea" invisible="complaint_type != 'question'" required="true" context="{'message': 'Your custom message here'}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Form view for Complaint Stage -->
+        <record id="view_complaint_stage_form" model="ir.ui.view">
+            <field name="name">realestate.complaint.stage.form</field>
+            <field name="model">realestate.complaint.stage</field>
+            <field name="arch" type="xml">
+                <form string="Complaint Stage">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                            <field name="state"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Complaint Kanban View -->
+        <record id="view_complaint_kanban" model="ir.ui.view">
+            <field name="name">complaint.kanban</field>
+            <field name="model">realestate.complaint</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage_id">
+                    <templates>
+                        <t t-name="kanban-menu">
+                            <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
+                            <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                        </t>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_card">
+                                <!-- Header -->
+                                <div class="o_kanban_header">
+                                    <div class="o_kanban_record_title">
+                                        <h2><strong><field name="name"/></strong></h2>
+                                        <h5>
+                                            <i class="fa fa-home" aria-hidden="true" style="margin-right: 5px;"></i>
+                                            <strong><field name="flat_address" options="{'no_open': True}"/></strong>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <!-- Body -->
+                                <div class="o_kanban_body">
+                                    <div class="o_kanban_tags">
+                                        <h4><field name="complaint_type"/></h4>
+                                    </div>
+                                    <div>
+                                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    </div>
+                                </div>
+                                <!-- Footer -->
+                                <div class="o_kanban_footer">
+                                    <div class="o_kanban_footer_left">
+                                        <strong><field name="user_id" options="{'no_open': True}"/></strong>
+                                    </div>
+                                    <div class="o_kanban_footer_right">
+                                        <field name="user_id" widget="many2one_avatar_user" domain="[('share', '=', False)]"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                    <search>
+                        <filter string="My Complaints" name="my_complaints" domain="[('user_id', '=', uid)]"/>
+                        <field name="stage_id"/>
+                    </search>
+                </kanban>
+            </field>
+        </record>
+
+
+        <!-- Search view for Complaint -->
+        <record id="complaint_kanban_view_search" model="ir.ui.view">
+            <field name="name">complaint.kanban.search</field>
+            <field name="model">realestate.complaint</field>
+            <field name="arch" type="xml">
+                <search string="My complaints Search">
+                    <field name="name" string="Request"/>
+                    <field name="tenant_name"/>
+                    <field name="user_id"/>
+                    <field name="complaint_type"/>
+                    <field name="stage_id"/>
+                    <filter string="My Complaints" name="my_complaints" domain="[('user_id', '=', uid)]"/>
+                    <separator/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Complaint List View -->
+        <record id="view_complaint_tree" model="ir.ui.view">
+            <field name="name">complaint.tree</field>
+            <field name="model">realestate.complaint</field>
+            <field name="arch" type="xml">
+                <tree string="Complaints">
+                    <field name="name"/>
+                    <field name="tenant_name"/>
+                    <field name="complaint_type"/>
+                    <field name="stage_id"/>
+                     <field name="user_id" domain="[('user_id', '=', uid)]"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action to open complaint form -->
+        <record id="action_complaint_form" model="ir.actions.act_window">
+            <field name="name">Complaints</field>
+            <field name="res_model">realestate.complaint</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a new complaint.
+                </p>
+            </field>
+        </record>
+
+        <!-- Action to open the form view of complaint stages-->
+        <record id="action_complaint_stage_form" model="ir.actions.act_window">
+            <field name="name">Complaint Stages</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">realestate.complaint.stage</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new stage for tenant complaints.
+                </p>
+            </field>
+        </record>
+
+        <!-- Action to open the form view complaint tags-->
+        <record id="action_complaint_tag_form" model="ir.actions.act_window">
+            <field name="name">Complaint tags</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">realestate.complaint.tag</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new tag for tenant complaints.
+                </p>
+            </field>
+        </record>
+
+        <!-- Tree view for Complaint Tags -->
+        <record id="view_complaint_tag_tree" model="ir.ui.view">
+            <field name="name">realestate.complaint.tag.tree</field>
+            <field name="model">realestate.complaint.tag</field>
+            <field name="arch" type="xml">
+                <form string="Complaint Tags">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="color" widget="color_picker"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Menu for complaints -->
+        <menuitem id="menu_complaint" name="Complaints" sequence="30"/>
+        <menuitem id="menu_complaint_form" name="All Complaints" parent="menu_complaint" action="action_complaint_form" sequence="10"/>
+
+        <!-- Menu for Configuration -->
+        <menuitem id="menu_config" name="Configuration" parent="menu_complaint" sequence="20"/>
+        <menuitem id="menu_complaint_stage_list" name="Complaint Stages" parent="menu_config" action="action_complaint_stage_form" sequence="10"/>
+        <menuitem id="menu_complaint_tags_list" name="Complaint Tags" parent="menu_config" action="action_complaint_tag_form" sequence="20"/>
+
+        
+    </data>
+</odoo>

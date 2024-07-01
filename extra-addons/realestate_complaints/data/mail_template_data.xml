@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Mail Template for complaints confirmation-->
+        <record id="mail_complaint_confirmation" model="mail.template">
+            <field name="name">Complaint Confirmation</field>
+            <field name="model_id" ref="realestate_complaints.model_realestate_complaint"/>
+            <field name="subject">Complaint Received: {{object.name}}</field>
+            <field name="email_from">{{object.company_id.email}}</field>
+            <field name="email_to">{{object.tenant_email}}</field>
+            <field name="body_html" type="html">
+                    <p>Dear <t t-out="object.tenant_name" /></p>
+                    <p>Your complaint with number <strong><t t-out="object.name" /></strong> has been received.</p>
+                    <p>A customer service representative will review it shortly.</p>
+            </field>
+        </record>
+
+        <!-- Mail Template for answered complaints -->
+        <record id="message_complaint_answer" model="mail.template">
+            <field name="name">Complaint message</field>
+            <field name="model_id" ref="realestate_complaints.model_realestate_complaint"/>
+            <field name="subject">Complaint Answered: {{object.name}}</field>
+            <field name="email_from">{{object.company_id.email}}</field>
+            <field name="email_to">{{object.tenant_email}}</field>
+        </record>
+
+        <!-- Mail Template for work order -->
+        <record id="mail_complaint_work_order" model="mail.template">
+            <field name="name">Complaint Work order</field>
+            <field name="model_id" ref="realestate_complaints.model_realestate_complaint"/>
+            <field name="subject">Notification: Work Order and Employee Intervention</field>
+            <field name="email_from">{{object.company_id.email}}</field>
+            <field name="email_to">{{object.tenant_email}}</field>
+            <field name="body_html" type="html">
+                <p>Dear <t t-out="object.tenant_name"/></p>
+
+                <p>We are writing to inform you that a work order has been printed for your recent complaint.</p>
+                <p>Details:</p>
+                <ul>
+                    <li><strong>Complaint:</strong> <t t-out="object.name"/></li>
+                    <li><strong>Action Plan:</strong> <t t-out="object.action_plan"/></li>
+                </ul>
+
+                <p>An employee from RealEstateX will be handling your complaint and will reach out to you shortly.</p>
+            
+                <p>Thank you for your understanding.</p>
+
+                <p>Best regards,</p>
+            </field>
+        </record>
+    </data>
+</odoo>

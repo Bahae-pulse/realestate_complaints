@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Define the module category for customer service -->
+    <record id="module_category_customer_service" model="ir.module.category">
+        <field name="name">Customer Service</field>
+        <field name="description">Category for Customer Service</field>
+    </record>
+
+    <!-- Define the group Customer Service Representative -->
+    <record id="group_customer_service_representative" model="res.groups">
+        <field name="name">Customer Service Representative</field>
+        <field name="category_id" ref="module_category_customer_service"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Define the group Customer Service Supervisor -->
+    <record id="group_customer_service_supervisor" model="res.groups">
+        <field name="name">Customer Service Supervisor</field>
+        <field name="category_id" ref="module_category_customer_service"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Define the User Customer Service -->
+    <record id="user_customer_service" model="res.users">
+        <field name="name">Customer Service</field>
+        <field name="login">customer_service@realestatex.com</field>
+        <field name="email">customer_service@realestatex.com</field>
+        <field name="password">admin</field>
+        <field name="groups_id" eval="[(4, ref('realestate_complaints.group_customer_service_representative'))]"/>
+    </record>
+
+    <!-- Define the User Supervisor -->
+    <record id="user_supervisor" model="res.users">
+        <field name="name">Supervisor</field>
+        <field name="login">supervisor@realestatex.com</field>
+        <field name="email">supervisor@realestatex.com</field>
+        <field name="password">admin</field>
+        <field name="groups_id" eval="[(4, ref('realestate_complaints.group_customer_service_supervisor'))]"/>
+    </record>
+
+    <!-- Define access rights for customer service representative -->
+    <record id="access_group_customer_service_representative" model="ir.model.access">
+        <field name="name">Access to customer service</field>
+        <field name="model_id" ref="model_realestate_complaint"/>
+        <field name="group_id" ref="realestate_complaints.group_customer_service_representative"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Define access rights for customer service supervisor -->
+    <record id="access_group_customer_service_supervisor" model="ir.model.access">
+        <field name="name">Access to supervisor</field>
+        <field name="model_id" ref="model_realestate_complaint"/>
+        <field name="group_id" ref="realestate_complaints.group_customer_service_supervisor"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>

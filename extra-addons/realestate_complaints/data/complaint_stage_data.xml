@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+     <!-- Define Complaint stages -->
+        <record id="stage_new" model="realestate.complaint.stage">
+            <field name="name">New</field>
+            <field name="state">new</field>
+            <field name="sequence">10</field>
+        </record>
+        
+        <record id="stage_in_review" model="realestate.complaint.stage">
+            <field name="name">In Review</field>
+            <field name="state">in_review</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="stage_in_progress" model="realestate.complaint.stage">
+            <field name="name">In Progress</field>
+            <field name="state">in_progress</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="stage_solved" model="realestate.complaint.stage">
+            <field name="name">Solved</field>
+            <field name="state">solved</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="stage_dropped" model="realestate.complaint.stage">
+            <field name="name">Dropped</field>
+            <field name="state">dropped</field>
+            <field name="sequence">50</field>
+        </record>
+    </data>
+</odoo>
