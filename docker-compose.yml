@@ -1,4 +1,3 @@
-
 services:
   odoo:
     build:
@@ -22,7 +21,11 @@ services:
     restart: always
     networks:
       - mynetwork
-    command: odoo -u realestate_complaints --dev=reload
+    command: |
+      /bin/bash -c "
+      pip install pytest && \
+      odoo -i realestate_complaints --dev=reload
+      "
 
   db:
     image: postgres:latest

@@ -9,4 +9,7 @@ RUN mkdir -p /var/lib/odoo/.local/share/Odoo/filestore && \
 RUN mkdir -p /var/lib/odoo/.local/share/Odoo/sessions && \
     chown -R odoo:odoo /var/lib/odoo/.local/share/Odoo/sessions
 
+# Install additional packages if needed
+RUN pip3 install pytest
+
 USER odoo
