@@ -255,7 +255,7 @@ docker-compose down
 + Start the services with the updated configuration:
   
 ```
-docker-compose down
+docker-compose up -d
 ```
 
 # Testing
