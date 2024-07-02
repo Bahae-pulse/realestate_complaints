@@ -42,7 +42,6 @@ db_password = odoo
 data_dir = /var/lib/odoo/.local/share/Odoo
 addons_path = /mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons
 test_enable = True
-test_file = realestate_complaints
 dev_mode = True
 ```
 **Dockerfile**
