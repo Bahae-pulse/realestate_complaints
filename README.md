@@ -58,7 +58,11 @@ RUN mkdir -p /var/lib/odoo/.local/share/Odoo/filestore && \
 RUN mkdir -p /var/lib/odoo/.local/share/Odoo/sessions && \
     chown -R odoo:odoo /var/lib/odoo/.local/share/Odoo/sessions
 
+# Install additional packages if needed
+RUN pip3 install pytest
+
 USER odoo
+
 ```
 **docker-compose.yml**
 ```
@@ -86,7 +90,11 @@ services:
     restart: always
     networks:
       - mynetwork
-    command: odoo -u realestate_complaints --dev=reload
+    command: |
+      /bin/bash -c "
+      pip install pytest && \
+      odoo -i realestate_complaints --dev=reload
+      "
 
   db:
     image: postgres:latest
