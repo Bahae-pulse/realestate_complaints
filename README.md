@@ -244,13 +244,31 @@ Sign in with an existant User ( Representative or Supervisor ) that should be as
 
 #
 
+**- Usefull command docker :**
+
++ Stop the current services:
+  
+```
+docker-compose down
+```
+
++ Start the services with the updated configuration:
+  
+```
+docker-compose down
+```
+
 # Testing
 **Unit Tests**
 Unit tests are included to ensure the functionality of the module. To run the tests:
 ```
-docker-compose run odoo --test-enable --stop-after-init
+docker-compose exec odoo odoo -i realestate_complaints -d odoo --test-enable --stop-after-init --addons-path=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons
 ```
+#
 
+<img src="https://github.com/Bahae-pulse/realestate_complaints/assets/162335348/7c56fd70-3f0f-4246-ba0a-f8124ad8b415" width="800">
+
+#
 
 # Contact
 For any questions or support, please contact:
