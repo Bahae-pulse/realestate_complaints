@@ -69,9 +69,14 @@
                                 <!-- Header -->
                                 <div class="o_kanban_header">
                                     <div class="o_kanban_record_title">
+                                        <style>
+                                            .m-r {
+                                                margin-right: 5px;
+                                            }
+                                        </style>
                                         <h2><strong><field name="name"/></strong></h2>
                                         <h5>
-                                            <i class="fa fa-home" aria-hidden="true" style="margin-right: 5px;"></i>
+                                            <i class="fa fa-home m-r" aria-hidden="true" title="Home"></i>
                                             <strong><field name="flat_address" options="{'no_open': True}"/></strong>
                                         </h5>
                                     </div>
