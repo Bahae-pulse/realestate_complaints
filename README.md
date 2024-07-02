@@ -273,7 +273,7 @@ docker-compose exec odoo odoo -i realestate_complaints -d odoo --test-enable --s
 ```
 #
 
-<img src="https://github.com/Bahae-pulse/realestate_complaints/assets/162335348/7c56fd70-3f0f-4246-ba0a-f8124ad8b415" width="800">
+<img src="https://github.com/Bahae-pulse/realestate_complaints/assets/162335348/d4748873-583e-4ed0-8e8c-3372563b3606" width="800">
 
 #
 
